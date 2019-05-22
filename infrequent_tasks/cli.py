@@ -8,7 +8,7 @@ Usage:
 
 Options:
     -h --help   Show this screen.
-    -w --within-days   List items are going to be in the done state within n days
+    -w --within-days   List items are going to be in the todo state within n days
     -c --complete
 """
 
