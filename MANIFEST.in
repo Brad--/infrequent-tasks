@@ -1,0 +1,16 @@
+# MANIFEST.in
+# Specifies files included in build
+exclude .gitignore
+exclude .coverage
+exclude .travis.yml
+
+include README.rst
+include setup.cfg
+
+prune .cache
+prune .gitignore
+prune build
+prune dist
+
+recursive-exclude * .egg-info *
+recursive include tests *
