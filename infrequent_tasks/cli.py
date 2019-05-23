@@ -2,14 +2,12 @@
 
 Usage:
     infrequent_tasks list
-    infrequent_tasks list todo [--within-days n | -w n]
+    infrequent_tasks list todo
     infrequent_tasks complete <task-number>
-    infrequent_tasks new <date> [--complete | -c]
+    infrequent_tasks new
 
 Options:
     -h --help   Show this screen.
-    -w --within-days   List items are going to be in the todo state within n days
-    -c --complete
 """
 
 from inspect import getmembers, isclass
