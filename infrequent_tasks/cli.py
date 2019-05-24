@@ -5,6 +5,7 @@ Usage:
     infrequent_tasks list todo
     infrequent_tasks complete <task-number>
     infrequent_tasks new
+    infrequent_tasks delete <task-number>
 
 Options:
     -h --help   Show this screen.
@@ -24,7 +25,14 @@ def main():
     for (key, value) in arguments.items():
         if hasattr(infrequent_tasks.commands, key) and value:
             module = getattr(infrequent_tasks.commands, key)
+            print(module)
             infrequent_tasks.commands = getmembers(module, isclass)
-            command = [runnableCommands[1] for runnableCommands in infrequent_tasks.commands if runnableCommands[0] != 'BaseCommand'][0]
+            print(infrequent_tasks.commands)
+            print (getmembers(module, isclass))
+            # Parse commands by class name, returning only the Class (runnableCommands[1]) and return the first item in the list (should only be one)
+            command = [runnableCommands[1] for runnableCommands in infrequent_tasks.commands if commandMatchesKey(runnableCommands, key)][0]
             command = command(arguments)
             command.run()
+
+def commandMatchesKey(runnableCommands, key):
+    return runnableCommands[0] != 'BaseCommand' and key.upper() in runnableCommands[0].upper()

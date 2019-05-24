@@ -9,21 +9,29 @@ SERIAL_NONE = 'None'
 class TaskModel():
     # Populate TaskModel fields from a line in the user_tasks file
     #Pattern: name  repeat_frequency    complete    last_completion_date
-    def deserialize(self, line):
+    def deserialize(self, id_, line):
         tokens = line.split(SEPARATOR)
+        self.id_ = id_
         self.name = tokens[0]
         self.repeat_frequency = tokens[1]
         self.complete = eval(tokens[2])
         self.last_completion_date = self.getDateTimeFromISO8601String(tokens[3])
 
-        if self.getResetDate() < date.today():
+        if self.getResetDate() and self.getResetDate() < date.today():
             self.setTodo()
-    
 
     def getDateTimeFromISO8601String(self, s):
         if s.strip() == SERIAL_NONE:
             return None
         return parse(s).date()
+
+    def createNewTask(self, name, repeat_frequency, complete):
+        self.name = name
+        self.repeat_frequency = repeat_frequency
+        self.complete = complete
+
+        if self.complete:
+            self.last_completion_date = date.today()
 
 
     # Get string in serialized format for file write
@@ -40,7 +48,7 @@ class TaskModel():
 
     def getResetDate(self):
         if not self.complete:
-            return 0
+            return None
         today = date.today()
         time_since_completion = abs(today - self.last_completion_date)
 
@@ -71,5 +79,4 @@ class TaskModel():
 
 
     def print(self):
-        print(date.today().isoformat())
         print(self.getSerializedString())

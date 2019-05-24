@@ -7,29 +7,28 @@ from infrequent_tasks.util import StorageClient
 class ListCommand(BaseCommand):
     """Lists tasks and their associated data"""
 
-    def __init__(self, options, *args, **kwargs):
-        super().__init__(options, *args, **kwargs)
-
-        self.storage_client = StorageClient()
-
     def run(self):
         print('options: ')
         print(self.options)
-        self.printList()
+        ListCommand.printList(self.storage_client.readTaskList(), self.options['todo'])
 
-    def printList(self):
-        task_list = self.storage_client.getTaskList()
+    # TODO This should print a better, more tightly columned list. Right now it just dumps what the output file will be, basically
+    #   Should print line numbers too, so you can mark completed by line number
+    @staticmethod
+    def printList(task_list, todo):
         if len(task_list) == 0:
-            self.printEmptyListMessage()
+            ListCommand.printEmptyListMessage()
         else:
-            if self.options['todo']:
+            if todo:
                 for task in task_list:
                     if not task.complete:
                         task.print()
             else:
+                print('\t'.join(['Name', 'Repeat', 'Completed', 'Last Completion']))
                 for task in task_list:
                     task.print()
     
-    def printEmptyListMessage(self):
+    @staticmethod
+    def printEmptyListMessage():
         print('You don\'t have any tasks!')
         print('You can create one by running: `infrequent_tasks new`')

@@ -16,20 +16,30 @@ class StorageClient():
         self.app_author = 'BradsStuff'
         self.task_filename = 'user_tasks.txt'
         self.app_data_path = user_data_dir(self.app_name, self.app_author)
+        self.task_filepath = join(self.app_data_path, self.task_filename)
 
     #Task list folder file should be as follows (tab separated):
     #Name   RepeatFrequency     Complete    LastCompletion
-    def getTaskList(self):
+    def readTaskList(self):
         try:
             tasks = []
-            path_to_tasks = join(self.app_data_path, self.task_filename)
-            with open(path_to_tasks) as task_file:
+            with open(self.task_filepath) as task_file:
                 lines = task_file.readlines()
-                for line in lines:
+                for i, line in enumerate(lines):
                     task_model = TaskModel()
-                    task_model.deserialize(line)
+                    # id is line number
+                    task_model.deserialize(i + 1, line)
                     tasks.append(task_model)
             return tasks
         except IOError:
             pathlib.Path(self.app_data_path).mkdir(parents = True, exist_ok = True)
             return []
+
+    def writeTaskList(self, tasks):
+        # Overwrite task file with given tasks
+        try:
+            with open(self.task_filepath, 'w') as task_file:
+                for task in tasks:
+                    task_file.write(task.getSerializedString() + '\n')
+        except IOError as e:
+            raise e
