@@ -5,11 +5,13 @@ from infrequent_tasks.util import StorageClient
 from infrequent_tasks.models import TaskModel
 from infrequent_tasks.commands import ListCommand
 
+import logging
+
 class NewCommand(BaseCommand):
     """Create a new task"""
 
     def run(self):
-        print(self.options)
+        logging.debug(self.options)
         self.guidedTaskCreate()
 
     def guidedTaskCreate(self):

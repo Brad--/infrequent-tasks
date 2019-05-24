@@ -4,12 +4,14 @@
 from .base_command import BaseCommand
 from infrequent_tasks.util import StorageClient
 
+import logging
+
 class ListCommand(BaseCommand):
     """Lists tasks and their associated data"""
 
     def run(self):
-        print('options: ')
-        print(self.options)
+        logging.debug('ListCommand options: ')
+        logging.debug(self.options)
         ListCommand.printList(self.storage_client.readTaskList(), self.options['todo'])
 
     # TODO This should print a better, more tightly columned list. Right now it just dumps what the output file will be, basically

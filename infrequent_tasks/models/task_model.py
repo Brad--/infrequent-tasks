@@ -18,7 +18,7 @@ class TaskModel():
         self.last_completion_date = self.getDateTimeFromISO8601String(tokens[3])
 
         if self.getResetDate() and self.getResetDate() < date.today():
-            self.setTodo()
+            self.markTodo()
 
     def getDateTimeFromISO8601String(self, s):
         if s.strip() == SERIAL_NONE:
@@ -68,12 +68,12 @@ class TaskModel():
         return reset_date
 
 
-    def setTodo(self):
+    def markTodo(self):
         self.complete = False
         self.last_completion_date = None
 
 
-    def setDone(self):
+    def markComplete(self):
         self.complete = True
         self.last_completion_date = date.today()
 

@@ -1,12 +1,11 @@
 """Read and write AppData"""
 
 from appdirs import user_data_dir
-
 from infrequent_tasks.models import TaskModel
-
-import os.path
 from os.path import abspath, dirname, join
+
 import pathlib
+import logging
 
 class StorageClient():
     """Read and Write AppData"""
@@ -32,6 +31,7 @@ class StorageClient():
                     tasks.append(task_model)
             return tasks
         except IOError:
+            logging.info('Error reading AppData, creating AppData directory')
             pathlib.Path(self.app_data_path).mkdir(parents = True, exist_ok = True)
             return []
 
@@ -42,4 +42,6 @@ class StorageClient():
                 for task in tasks:
                     task_file.write(task.getSerializedString() + '\n')
         except IOError as e:
+            logging.error('Error writing tasks to file: ')
+            logging.error(e)
             raise e
