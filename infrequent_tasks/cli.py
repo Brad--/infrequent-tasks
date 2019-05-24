@@ -3,16 +3,16 @@
 Usage:
     infrequent_tasks list
     infrequent_tasks list todo
-    infrequent_tasks complete <task-number>
+    infrequent_tasks mark complete <task-number>
+    infrequent_tasks mark todo <task-number>
     infrequent_tasks new
     infrequent_tasks delete <task-number>
+
     infrequent_tasks dump <output-filepath>
     infrequent_tasks load <input-filepath>
-    infrequent_tasks list [-d]
 
 Options:
-    -h --help   Show this screen.
-    -d --debug  Add debug level logging
+    -h --help   Show this screen
 """
 
 from inspect import getmembers, isclass
@@ -42,15 +42,12 @@ def main():
             command.run()
 
 def setupLogger(arguments):
-    log_level = logging.INFO
+    log_level = logging.DEBUG
     app_name = 'InfrequentTasks'
     app_author = 'BradsStuff'
     log_dir = user_log_dir(app_name, app_author)
     logfile_path = join(log_dir, 'infrequent-tasks-cli.log')
     pathlib.Path(log_dir).mkdir(parents = True, exist_ok = True)
-
-    if arguments['--debug']:
-        log_level = logging.DEBUG
     
     logging.basicConfig(
         filename=logfile_path, 
