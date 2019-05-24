@@ -6,6 +6,8 @@ Usage:
     infrequent_tasks complete <task-number>
     infrequent_tasks new
     infrequent_tasks delete <task-number>
+    infrequent_tasks dump <output-filepath>
+    infrequent_tasks load <input-filepath>
 
 Options:
     -h --help   Show this screen.
