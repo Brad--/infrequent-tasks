@@ -3,8 +3,7 @@
 Usage:
     infrequent_tasks list
     infrequent_tasks list todo
-    infrequent_tasks mark complete <task-number>
-    infrequent_tasks mark todo <task-number>
+    infrequent_tasks mark (complete | todo) <task-number>
     infrequent_tasks new
     infrequent_tasks delete <task-number>
 
@@ -14,6 +13,7 @@ Usage:
 Options:
     -h --help   Show this screen
 """
+# TODO make the list commands an enum or something like that
 
 from inspect import getmembers, isclass
 from os.path import join

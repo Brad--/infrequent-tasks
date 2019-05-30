@@ -17,6 +17,8 @@ class StorageClient():
         self.app_data_path = user_data_dir(self.app_name, self.app_author)
         self.task_filepath = join(self.app_data_path, self.task_filename)
 
+        self.tasks = self.readTaskList()
+
     #Task list folder file should be as follows (tab separated):
     #Name   RepeatFrequency     Complete    LastCompletion
     def readTaskList(self):
@@ -45,3 +47,9 @@ class StorageClient():
             logging.error('Error writing tasks to file: ')
             logging.error(e)
             raise e
+
+    def getAllTasks(self):
+        return self.tasks
+
+    def getTaskById(self, id):
+        return [task for task in self.tasks if task.id is id][0]
