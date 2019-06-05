@@ -1,7 +1,8 @@
 """Add a new task. Should allow it to be created as already complete!"""
 
 from .base_command import BaseCommand
-from infrequent_tasks.util import StorageClient
+# Do i need this if imported on parent class?
+#from infrequent_tasks.util import StorageClient
 from infrequent_tasks.models import TaskModel
 from infrequent_tasks.commands import ListCommand
 
@@ -58,11 +59,7 @@ class NewCommand(BaseCommand):
         task_model = TaskModel()
         task_model.createNewTask(name, repeat_frequency, complete)
 
-        task_list = self.storage_client.readTaskList()
-        task_model.id_ = task_list[len(task_list) - 1].id_
-        task_list.append(task_model)
+        self.storage_client.addTask(task_model)
 
         print('Successfully added "' + task_model.name + '" to your tasks list:')
         ListCommand.printList(task_list, False)
-
-        self.storage_client.writeTaskList(task_list)

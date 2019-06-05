@@ -12,7 +12,7 @@ class ListCommand(BaseCommand):
     def run(self):
         logging.debug('ListCommand options: ')
         logging.debug(self.options)
-        ListCommand.printList(self.storage_client.readTaskList(), self.options['todo'])
+        ListCommand.printList(self.storage_client.getAllTasks(), self.options['todo'])
 
     # TODO This should print a better, more tightly columned list. Right now it just dumps what the output file will be, basically
     #   Should print line numbers too, so you can mark completed by line number

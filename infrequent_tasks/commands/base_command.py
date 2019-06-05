@@ -11,4 +11,4 @@ class BaseCommand(object):
         self.kwargs = kwargs
 
     def run(self):
-        raise NotImplementedError('Extending classes need to implement run()')
+        raise NotImplementedError('BaseCommand: Extending classes need to implement run()')

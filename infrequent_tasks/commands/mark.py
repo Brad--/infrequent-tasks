@@ -18,9 +18,15 @@ class MarkCommand(BaseCommand):
             
 
     def markComplete(self, task_number):
-        # tasks = self.storage_client.getTaskById()
-        # Get task by ID? Yeah I'm gonna go do that
-        print('mark complete')
+        task = self.storage_client.getTaskById(task_number)
+        if task.complete:
+            print('That task is already complete!')
+        else:
+            task.markComplete()
 
     def markTodo(self, task_number):
-        print('mark todo')
+        task = self.storage_client.getTaskById(task_number)
+        if not task.complete:
+            print('That task is already marked as todo!')
+        else:
+            task.markTodo()
